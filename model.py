@@ -36,15 +36,12 @@ class ResBlock(nn.Module):
         self.relu_3 = nn.ReLU()
         self.seq = nn.Sequential(self.conv1, self.batch_norm1, self.relu_1, self.conv2, self.batch_norm2)
         self.residual = None
-        self.cnt = 0
 
     def forward(self, input_tensor):
         self.residual = input_tensor
         output_tensor = self.seq(input_tensor)
         if self.residual_conv:
-            #self.cnt +=1
             self.residual = self.conv1X1(self.residual)
-            #print(self.cnt)
         # Now normalize the residual
         self.residual = self.batch_norm3(self.residual)
         output_tensor += self.residual
