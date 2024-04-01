@@ -10,25 +10,20 @@ import pandas as pd
 class Flatten(nn.Module):
     """
     Custom module to flatten the input tensor.
-
-    This module flattens the input tensor to a 2D tensor while preserving the batch dimension.
-
-    Args:
-        input_tensor (torch.Tensor): Input tensor to be flattened.
-
-    Returns:
-        torch.Tensor: Flattened tensor with shape (batch_size, -1), where batch_size is the size of the batch
-        and the second dimension is the flattened representation of the input tensor.
+    This module flattens the input tensor to a 2D tensor while preserving the batch dimension. 
     """
     def __init__(self):
+        """
+        Initializes a Flatten Module
+        """
         super(Flatten, self).__init__()
         self.batch_dim = None
 
     def forward(self, input_tensor):
         """
         Forward pass of the Flatten module.
-
-        Args:
+        
+        Parameters:
             input_tensor (torch.Tensor): Input tensor to be flattened.
 
         Returns:
@@ -40,18 +35,17 @@ class Flatten(nn.Module):
 
 class ResBlock(nn.Module):
     """
-    Residual block module for ResNet architecture.
-
-    Args:
-        in_channels (int): Number of input channels.
-        out_channels (int): Number of output channels.
-        stride_shape (int, optional): Stride size for convolution operation. Default is 1.
-
-    Returns:
-        torch.Tensor: Output tensor after passing through the residual block.
-
+    Residual block module for ResNet architecture. 
     """
     def __init__(self, in_channels, out_channels, stride_shape=1):
+        """
+        Initializes a ResBlock module
+        
+        Parameters:
+            in_channels (int): Number of input channels.
+            out_channels (int): Number of output channels.
+            stride_shape (int, optional): Stride size for convolution operation. Default is 1.   
+        """
         super(ResBlock, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride_shape, padding=1)
         self.batch_norm1 = nn.BatchNorm2d(out_channels)
@@ -74,7 +68,7 @@ class ResBlock(nn.Module):
         """
         Forward pass of the Residual block module.
 
-        Args:
+        Parameters:
             input_tensor (torch.Tensor): Input tensor to pass through the residual block.
 
         Returns:
@@ -94,15 +88,11 @@ class ResBlock(nn.Module):
 class ResNet(nn.Module):
     """
     ResNet model architecture consisting of the residual blocks, the average pooling layer and the final classification layer.
-
-    Args:
-        None
-
-    Returns:
-        torch.Tensor: Output tensor after passing through the ResNet model.
-
     """
     def __init__(self):
+        """
+        Initializes a ResNet model.
+        """
         super(ResNet, self).__init__()
         self.seq1 = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=2, padding=3),
@@ -131,7 +121,7 @@ class ResNet(nn.Module):
         """
         Forward pass for the ResNet model.
 
-        Args:
+        Parameters:
             input_tensor (torch.Tensor): Input tensor.
 
         Returns:
