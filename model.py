@@ -8,16 +8,49 @@ import pandas as pd
 
 
 class Flatten(nn.Module):
+    """
+    Custom module to flatten the input tensor.
+
+    This module flattens the input tensor to a 2D tensor while preserving the batch dimension.
+
+    Args:
+        input_tensor (torch.Tensor): Input tensor to be flattened.
+
+    Returns:
+        torch.Tensor: Flattened tensor with shape (batch_size, -1), where batch_size is the size of the batch
+        and the second dimension is the flattened representation of the input tensor.
+    """
     def __init__(self):
         super(Flatten, self).__init__()
         self.batch_dim = None
 
     def forward(self, input_tensor):
+        """
+        Forward pass of the Flatten module.
+
+        Args:
+            input_tensor (torch.Tensor): Input tensor to be flattened.
+
+        Returns:
+            torch.Tensor: Flattened tensor.
+        """
         self.batch_dim = input_tensor.shape[0]
         return input_tensor.reshape(self.batch_dim, -1)
 
 
 class ResBlock(nn.Module):
+    """
+    Residual block module for ResNet architecture.
+
+    Args:
+        in_channels (int): Number of input channels.
+        out_channels (int): Number of output channels.
+        stride_shape (int, optional): Stride size for convolution operation. Default is 1.
+
+    Returns:
+        torch.Tensor: Output tensor after passing through the residual block.
+
+    """
     def __init__(self, in_channels, out_channels, stride_shape=1):
         super(ResBlock, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride_shape, padding=1)
@@ -38,6 +71,15 @@ class ResBlock(nn.Module):
         self.residual = None
 
     def forward(self, input_tensor):
+        """
+        Forward pass of the Residual block module.
+
+        Args:
+            input_tensor (torch.Tensor): Input tensor to pass through the residual block.
+
+        Returns:
+            torch.Tensor: Output tensor after passing through the residual block.
+        """
         self.residual = input_tensor
         output_tensor = self.seq(input_tensor)
         if self.residual_conv:
@@ -50,6 +92,16 @@ class ResBlock(nn.Module):
 
 
 class ResNet(nn.Module):
+    """
+    ResNet model architecture consisting of the residual blocks, the average pooling layer and the final classification layer.
+
+    Args:
+        None
+
+    Returns:
+        torch.Tensor: Output tensor after passing through the ResNet model.
+
+    """
     def __init__(self):
         super(ResNet, self).__init__()
         self.seq1 = nn.Sequential(
@@ -76,6 +128,15 @@ class ResNet(nn.Module):
         )
 
     def forward(self, input_tensor):
+        """
+        Forward pass for the ResNet model.
+
+        Args:
+            input_tensor (torch.Tensor): Input tensor.
+
+        Returns:
+            torch.Tensor: Output tensor after passing through the ResNet model.
+        """
         output_tensor = self.seq1(input_tensor)
         output_tensor = self.seq2(output_tensor)
         output_tensor = self.seq3(output_tensor)
