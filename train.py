@@ -9,7 +9,6 @@ import model
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import operator
-
 import warnings
 
 warnings.simplefilter("ignore")
@@ -37,7 +36,6 @@ is_dropout = True
 for is_adam in opti:
     for Batch_size in BATCH:
         for learning_rate in LR:
-
             # formulate the training and validation data loaders
             train_DL = t.utils.data.DataLoader(df_train, batch_size=Batch_size, shuffle=True)
             val_DL = t.utils.data.DataLoader(df_val, batch_size=Batch_size)
@@ -85,7 +83,6 @@ for is_adam in opti:
             f.write(f'F1 score on the best model is {f1_score} with valid_loss = {valid_loss} and'
                     f' epoch of {epoch_count} \n Batch size = {Batch_size} and learning rate = {learning_rate}')
             f.close()
-
             if any(fname.endswith(".ckp") for fname in os.listdir(path)):
                 trained_model.restore_checkpoint(epoch_count)
                 trained_model.save_onnx(path + '/best_checkpoint_{:03d}.onnx'.format(epoch_count))
