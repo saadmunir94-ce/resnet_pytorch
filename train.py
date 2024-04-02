@@ -1,4 +1,4 @@
-pyimport torch as t
+import torch as t
 from data import ChallengeDataset
 from trainer import Trainer
 from matplotlib import pyplot as plt
