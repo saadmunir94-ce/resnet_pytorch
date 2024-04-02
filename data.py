@@ -19,7 +19,8 @@ train_std = [0.16043035, 0.16043035, 0.16043035]
 
 class ChallengeDataset(Dataset):
     """
-    Custom dataset class for the solar cell challenge dataset.
+    Custom dataset class for the solar cell challenge dataset. 
+    It will formulate either the training or the validation dataset.
     
     Attributes:
         to_tensor (torchvision.transforms.Compose): Transformation to convert images to PyTorch tensors.
@@ -32,7 +33,7 @@ class ChallengeDataset(Dataset):
     
     def __init__(self, data, mode):
         """
-        Initializes the ChallengeDataset.
+        Initializes the ChallengeDataset, either the training set or the validation set.
 
         Parameters:
             data (pandas.DataFrame): Pandas DataFrame containing image paths and labels where each row contains the image path and the tuple of labels.
