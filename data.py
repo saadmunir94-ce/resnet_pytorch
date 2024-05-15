@@ -1,3 +1,4 @@
+# Imports of libraries
 from torch.utils.data import Dataset
 import os
 import torch as t
@@ -8,8 +9,9 @@ from skimage.color import gray2rgb
 import numpy as np
 import torchvision as tv
 from sklearn.model_selection import train_test_split
-
 import warnings
+
+# ignore warnings
 warnings.simplefilter("ignore")
 
 # mean and standard deviation of the solar cell RGB images in the training set across the three channels.
